@@ -4,13 +4,19 @@ export default class ClassComponent extends Component {
     super(props);
     this.state = {
       memo: "ClassComponent init",
+      count: 0,
     };
   }
 
   static getDerivedStateFromProps(props, state) {
     console.log("[执行方法]getDerivedStateFromProps", props, state);
+    let params = {};
+    if (state.count === 1) {
+      params.count = -1;
+    }
     return {
       memo: props.text,
+      ...params,
     };
   }
 
@@ -20,6 +26,13 @@ export default class ClassComponent extends Component {
   }
 
   componentDidMount() {
+    setTimeout(() => {
+      console.log(this.state.count, "setTimeout");
+      this.setState({
+        count: this.state.count + 1,
+      });
+      console.log(this.state.count, "setTimeout");
+    }, 0);
     console.log("[执行方法]componentDidMount");
   }
 
@@ -47,13 +60,13 @@ export default class ClassComponent extends Component {
     console.log("[执行方法]componentWillUnmount");
   }
 
-  UNSAFE_componentWillMount() {
-    console.log("[执行方法]UNSAFE_componentWillMount");
-  }
+  // UNSAFE_componentWillMount() {
+  //   console.log("[执行方法]UNSAFE_componentWillMount");
+  // }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    console.log("[执行方法]UNSAFE_componentWillReceiveProps", nextProps);
-  }
+  // UNSAFE_componentWillReceiveProps(nextProps) {
+  //   console.log("[执行方法]UNSAFE_componentWillReceiveProps", nextProps);
+  // }
 
-  UNSAFE_componentWillUpdate() {}
+  // UNSAFE_componentWillUpdate() {}
 }
